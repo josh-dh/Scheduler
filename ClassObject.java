@@ -1,9 +1,6 @@
 package scheduler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Joshua Donelly-Higgins
@@ -23,6 +20,9 @@ public class ClassObject {
      * used to create a ClassObject during initial file read
      */
     public ClassObject(String type, String waitlist, String auxiliary, String auxiliaryClassNumbers, String begin, String end, String days) {
+        //conflictMap and days init
+        this.days = new HashMap<>();
+        this.conflictMap = new HashMap<>();
         //type
         this.type = type;
         //waitlist
@@ -30,16 +30,17 @@ public class ClassObject {
         //auxiliary
         this.auxiliary = Boolean.getBoolean(auxiliary);
         //auxiliaryClassNumbers
-        this.auxiliaryClassNumbers = Arrays.asList(auxiliaryClassNumbers.split("\\s*\\s*"));
+        this.auxiliaryClassNumbers = Arrays.asList(auxiliaryClassNumbers.split(","));
         //begin
         this.begin = Integer.parseInt(begin);
         //end
         this.end = Integer.parseInt(end);
         //days
-        List<String> dayList = Arrays.asList(days.split("\\s*\\s*"));
-        for (int i = 0; i < dayList.size(); i += 2) {
-            this.days.put(dayList.get(i), Boolean.getBoolean(dayList.get(i + 1)));
+        List<String> dayList = Arrays.asList(days.split(","));
+        for (int i = 0; i < 10; i += 2) {
+            this.days.put(dayList.get(i), Boolean.valueOf(dayList.get(i + 1)));
         }
+
     }
 
 
@@ -52,7 +53,7 @@ public class ClassObject {
         return false;
     }
 
-    public void setConflictMap(ArrayList<ClassObject> input) {
+    public void setConflictMap(Collection<ClassObject> input) {
         for (ClassObject element : input) {
             conflictMap.put(element, this.conflicts(element));
         }

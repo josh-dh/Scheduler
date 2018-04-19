@@ -9,6 +9,11 @@ import java.util.Scanner;
 /**
  * Reads path of csv file from command line argument
  * Parses file and reads data into database
+ *
+ * format for a class in a data file should be:
+ * classNumber,classType,waitlist["true" or "false],auxiliary["true" or "false"],
+ * auxiliaryClassNumbers["num1,num2,..."],begin[military time],end[military time],
+ * days["mo,[bool],tu,[bool],we,[bool],th,[bool],fr[bool]"]
  */
 public class Main {
 
@@ -73,16 +78,14 @@ public class Main {
             String key = entry.getKey();
             ClassObject value = entry.getValue();
             //set conflict map
-            ArrayList<ClassObject> conflicts = new ArrayList<>();
-            for (String classKey : value.auxiliaryClassNumbers) {
-                conflicts.add(classTable.get(classKey));
-            }
-            value.setConflictMap(conflicts);
+            value.setConflictMap(classTable.values());
             //set auxiliary classes
             for (String classKey : value.auxiliaryClassNumbers) {
                 value.auxiliaryClasses.add(classTable.get(classKey));
             }
         }
+
+        //TODO IMPLEMENT SCHEDULE GENERATOR
     }
 
     /**
