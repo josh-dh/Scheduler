@@ -45,7 +45,9 @@ public class ClassObject {
 
     public boolean conflicts(ClassObject compare) {
         for ( String key : days.keySet()) {
-            if (compare.days.get(key) && this.days.get(key)) return true;
+            if (compare.days.get(key) && this.days.get(key)) {
+                if (this.begin <= compare.end && this.end >= compare.begin) return true;
+            }
         }
         return false;
     }
