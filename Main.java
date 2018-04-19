@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * Reads path of csv file from command line argument
+ * Parses file and reads data into database
+ */
 public class Main {
 
     public static void main(String[] args) {
@@ -66,9 +70,19 @@ public class Main {
         //process the list of ClassObjects into their final state
         //this involves setting auxiliary classes and figuring out class conflicts
         for (HashMap.Entry<String, ClassObject> entry: classTable.entrySet()) {
-
+            String key = entry.getKey();
+            ClassObject value = entry.getValue();
+            //set conflict map
+            ArrayList<ClassObject> conflicts = new ArrayList<>();
+            for (String classKey : value.auxiliaryClassNumbers) {
+                conflicts.add(classTable.get(classKey));
+            }
+            value.setConflictMap(conflicts);
+            //set auxiliary classes
+            for (String classKey : value.auxiliaryClassNumbers) {
+                value.auxiliaryClasses.add(classTable.get(classKey));
+            }
         }
-
     }
 
     /**

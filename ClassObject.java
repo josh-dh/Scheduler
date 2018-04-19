@@ -13,7 +13,7 @@ public class ClassObject {
     public boolean waitlist;
     public boolean auxiliary;
     public List<String> auxiliaryClassNumbers;
-    public ArrayList<ClassObject> auxiliaryClasses;
+    public ArrayList<ClassObject> auxiliaryClasses = new ArrayList<>();
     public int begin;
     public int end;
     public HashMap<String, Boolean> days;
